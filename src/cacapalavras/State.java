@@ -7,4 +7,6 @@ public class State {
     char [][] cacaPalavra;
     int qtdPalavras;
     Palavra [] palavras;
+    int linhas;
+    int colunas;
 }

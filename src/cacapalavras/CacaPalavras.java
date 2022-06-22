@@ -15,24 +15,14 @@ import java.util.Scanner;
 public class CacaPalavras {
 
     static State state = new State();
+    static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        state.cacaPalavra = cacaPalavra();
-        System.out.println("quantos cacas palavras");
-        state.qtdCacaPalavra = input.nextInt();
-        System.out.println("Quantas palavras");
-        state.qtdPalavras = input.nextInt();
-        state.palavras = new Palavra[state.qtdPalavras];
-        for (int i = 0; i < state.qtdPalavras; i++) {
-            System.out.println(i+1 +"º palavra: ");
-            state.palavras[i] = new Palavra();
-            String palavra = input.nextLine();
-            state.palavras[i].content = palavra;
-        }
+    setState();
+    procurarPalavarasFrente();
     }
 
-    static char [] [] cacaPalavra (){
-        char[][] cacaPalavra = {
+    static char [] [] sopaPalavra (){
+        char[][] sopaPalavra = {
                 {'a', 'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'g'},
                 {'h', 'n', 'j', 'p', 'r', 'o', 'g', 'r', 'a', 'm', 'a'},
                 {'a', 'g', 'u', 'a', 'k', 'a', 'o', 'o', 's', 'i', 't'},
@@ -42,10 +32,44 @@ public class CacaPalavras {
                 {'s', 'r', 'r', 'a', 'e', 't', 'y', 'b', 'h', 'r', 'b'},
                 {'y', 'u', 'i', 'q', 'l', 'x', 'c', 'n', 'b', 'j', 'f'}
         };
-        return  cacaPalavra;
+        return  sopaPalavra;
     }
 
-    static void procurarPalavaras (){
+    static void setState(){
+        state.cacaPalavra = sopaPalavra();
+        System.out.println("quantos cacas palavras ? ");
+        state.qtdCacaPalavra = input.nextInt();
+        System.out.println("Quantas palavras");
+        state.qtdPalavras = input.nextInt();
+        state.palavras = new Palavra[state.qtdPalavras];
+        state.palavras[0] = new Palavra();
+        state.palavras[0].content = input.nextLine();
+        for (int i = 1; i < state.qtdPalavras; i++) {
+            System.out.println(i +"º palavra: ");
+            state.palavras[i-1] = new Palavra();
+            String palavra = input.nextLine();
+            state.palavras[i-1].content = palavra;
+        }
+    }
 
+    static void procurarPalavarasFrente (){
+        StringBuilder palavra = new StringBuilder();
+        char [][] sopaPalavras = state.cacaPalavra;
+        String procurada = "higg";
+        int caracter = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 11; j++) {
+                if (palavra.toString().equals(procurada)){
+                    break;
+                }
+                if (sopaPalavras[i][j] == procurada.charAt(caracter)){
+                    palavra.append(sopaPalavras[i][j]);
+                    caracter++;
+                }else {
+                    caracter = 0;
+                }
+            }
+        }
+        System.out.println("Encotrou "+palavra.toString());
     }
 }
