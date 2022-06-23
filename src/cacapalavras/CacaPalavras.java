@@ -124,16 +124,21 @@ static void buscaPalavras() {
 }
 
 static void buscaDiagonalSecundaria(String palavra){
-    for(int h=0, cont = 0; h < state.m+state.n; h++){
+    // para o numero de elementos na matriz para que 
+    //se possa criar sub-matriz para pegar cada 
+    //diagonal secundaria de uma delas
+    for(int h=0, cont = 0; h < state.m+state.n; h++){ 
         for(int i=0; i < state.m; i++){
             for(int j=0; j < state.n; j++){
+                //condicao para pegar a diagonal secundaria elementoda diagonal e 
+                //comparar com o caractere da palavra
                 if((i+j == h)&&(state.cacaPalavra[i][j] == palavra.charAt(cont))){
                     cont++;
                 }else if((i+j == h)&&(state.cacaPalavra[i][j] != palavra.charAt(cont))){
-                    cont = 0;
+                    cont = 0;//caso proximo elemento da diagonal seje differente
                 }
             
-                if(cont == palavra.length()){
+                if(cont == palavra.length()){ // caso encontre a palavra
                     System.out.println(palavra);
                     break;
                 }
@@ -143,6 +148,7 @@ static void buscaDiagonalSecundaria(String palavra){
         if(cont == palavra.length())break;
     }
     
+    // faz o inverso da anterior
     for(int h=(state.m+state.n)-1, cont = 0; h >= 0; h--){
         for(int i=state.m-1; i >= 0 ; i--){
             for(int j=state.n-1; j >= 0; j--){
@@ -163,13 +169,13 @@ static void buscaDiagonalSecundaria(String palavra){
     }
 }
 
-/*
 static void buscaCimaBaixo(String palavra) {
     
     for(int i=0, cont = 0; i < state.n; i++){
         for(int j=0; j < state.m; j++){
-            if(state.cacaPalavra[j][i] == palavra.charAt(cont)){
-                cont++;
+            //condicao para buscar de cima para baixo
+            if(state.cacaPalavra[j][i] == palavra.charAt(cont)){ 
+                cont++
             }else{
                 cont = 0;
             }
@@ -182,8 +188,10 @@ static void buscaCimaBaixo(String palavra) {
         if(cont == palavra.length())break;
     }
     
+    //busca de baixo para cima
     for(int i= state.n-1, cont = 0; i >= 0; i--){
         for(int j=state.m-1; j >= 0; j--){
+            
             if(state.cacaPalavra[j][i] == palavra.charAt(cont)){
                 cont++;
             }else{
@@ -198,7 +206,7 @@ static void buscaCimaBaixo(String palavra) {
         if(cont == palavra.length())break;
     }
 }
-    /*
+    
     static char [] [] sopaPalavra (){
         char[][] sopaPalavra = {
         {'a', 'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'g'},
@@ -250,5 +258,5 @@ static void buscaCimaBaixo(String palavra) {
             }
         }
         System.out.println("Encotrou "+palavra.toString());
-    }*/
+    }
 }
