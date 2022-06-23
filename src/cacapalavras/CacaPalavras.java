@@ -110,7 +110,10 @@ static void buscaPalavras() {
         state.palavra = new Scanner(new File("palavras.txt"));
         
         while (state.palavra.hasNext()) {
-            System.out.println( state.palavra.next());// -> gera as palavras que estao no ficheiro para procurar no caÇa palavras       
+            //System.out.println( state.palavra.next());// -> gera as palavras que estao no ficheiro para procurar no caÇa palavras       
+            String palavra = state.palavra.next();
+            //buscaCimaBaixo(palavra);
+            buscaDiagonalSecundaria(palavra);
         }
         
         state.palavra.close();
@@ -119,18 +122,95 @@ static void buscaPalavras() {
         System.out.println(e.getMessage());
     }
 }
+
+static void buscaDiagonalSecundaria(String palavra){
+    for(int h=0, cont = 0; h < state.m+state.n; h++){
+        for(int i=0; i < state.m; i++){
+            for(int j=0; j < state.n; j++){
+                if((i+j == h)&&(state.cacaPalavra[i][j] == palavra.charAt(cont))){
+                    cont++;
+                }else if((i+j == h)&&(state.cacaPalavra[i][j] != palavra.charAt(cont))){
+                    cont = 0;
+                }
+            
+                if(cont == palavra.length()){
+                    System.out.println(palavra);
+                    break;
+                }
+            }
+            if(cont == palavra.length())break;
+        }
+        if(cont == palavra.length())break;
+    }
+    
+    for(int h=(state.m+state.n)-1, cont = 0; h >= 0; h--){
+        for(int i=state.m-1; i >= 0 ; i--){
+            for(int j=state.n-1; j >= 0; j--){
+                if((i+j == h)&&(state.cacaPalavra[i][j] == palavra.charAt(cont))){
+                    cont++;
+                }else if((i+j == h)&&(state.cacaPalavra[i][j] != palavra.charAt(cont))){
+                    cont = 0;
+                }
+            
+                if(cont == palavra.length()){
+                    System.out.println(palavra);
+                    break;
+                }
+            }
+            if(cont == palavra.length())break;
+        }
+        if(cont == palavra.length())break;
+    }
+}
+
 /*
+static void buscaCimaBaixo(String palavra) {
+    
+    for(int i=0, cont = 0; i < state.n; i++){
+        for(int j=0; j < state.m; j++){
+            if(state.cacaPalavra[j][i] == palavra.charAt(cont)){
+                cont++;
+            }else{
+                cont = 0;
+            }
+            
+            if(cont == palavra.length()){
+                System.out.println(palavra);
+                break;
+            }
+        }
+        if(cont == palavra.length())break;
+    }
+    
+    for(int i= state.n-1, cont = 0; i >= 0; i--){
+        for(int j=state.m-1; j >= 0; j--){
+            if(state.cacaPalavra[j][i] == palavra.charAt(cont)){
+                cont++;
+            }else{
+                cont = 0;
+            }
+            
+            if(cont == palavra.length()){
+                System.out.println(palavra);
+                break;
+            }
+        }
+        if(cont == palavra.length())break;
+    }
+}
+    /*
     static char [] [] sopaPalavra (){
         char[][] sopaPalavra = {
-                {'a', 'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'g'},
-                {'h', 'n', 'j', 'p', 'r', 'o', 'g', 'r', 'a', 'm', 'a'},
-                {'a', 'g', 'u', 'a', 'k', 'a', 'o', 'o', 's', 'i', 't'},
-                {'w', 'u', 'l', 'k', 'v', 'k', 'f', 'l', 'm', 'c', 'n'},
-                {'f', 'l', 'q', 'o', 'g', 'a', 'y', 'w', 'i', 'h', 'd'},
-                {'b', 'a', 'a', 'v', 'x', 'j', 'n', 's', 'u', 'p', 'w'},
-                {'s', 'r', 'r', 'a', 'e', 't', 'y', 'b', 'h', 'r', 'b'},
-                {'y', 'u', 'i', 'q', 'l', 'x', 'c', 'n', 'b', 'j', 'f'}
+        {'a', 'a', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'g'},
+        {'h', 'n', 'j', 'p', 'r', 'o', 'g', 'r', 'a', 'm', 'a'},
+        {'a', 'g', 'u', 'a', 'k', 'a', 'o', 'o', 's', 'i', 't'},
+        {'w', 'u', 'l', 'k', 'v', 'k', 'f', 'l', 'm', 'c', 'n'},
+        {'f', 'l', 'q', 'o', 'g', 'a', 'y', 'w', 'i', 'h', 'd'},
+        {'b', 'a', 'a', 'v', 'x', 'j', 'n', 's', 'u', 'p', 'w'},
+        {'s', 'r', 'r', 'a', 'e', 't', 'y', 'b', 'h', 'r', 'b'},
+        {'y', 'u', 'i', 'q', 'l', 'x', 'c', 'n', 'b', 'j', 'f'}
         };
+    
         return  sopaPalavra;
     }
 
@@ -139,11 +219,11 @@ static void buscaPalavras() {
         System.out.println("quantos cacas palavras ? ");
         state.qtdCacaPalavra = input.nextInt();
         System.out.println("Quantas palavras");
-        state.qtdPalavras = input.nextInt();
-        state.palavras = new Palavra[state.qtdPalavras];
+        state.k = input.nextInt();
+        state.palavras = new Palavra[state.k];
         state.palavras[0] = new Palavra();
         state.palavras[0].content = input.nextLine();
-        for (int i = 1; i < state.qtdPalavras; i++) {
+        for (int i = 1; i < state.k; i++) {
             System.out.println(i +"º palavra: ");
             state.palavras[i-1] = new Palavra();
             String palavra = input.nextLine();
@@ -170,6 +250,5 @@ static void buscaPalavras() {
             }
         }
         System.out.println("Encotrou "+palavra.toString());
-    }
-    */
+    }*/
 }

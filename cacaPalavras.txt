@@ -1,13 +1,8 @@
-a b c d
-e f g h
-i j k l
-m n o p
-
-v b k
-l h q
-f g z
-
-z e 
-d i
-
-c o
+a a c d e f g h i g g
+h n j p r o g r a m a
+a g u a k a o o s i j
+w u l k v k f l m a n
+f l q o g a y w v h d
+b a a v x j n a u p w
+s r r a e t y b h r b
+y u i q l x c n b j f		
